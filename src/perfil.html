@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil do Usuário</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="login-screen">
+    <section class="account-type-container" role="region" aria-labelledby="perfil-title">
+      <h1 id="perfil-title" class="login-title">Seu Perfil</h1>
+
+      <div class="perfil-header">
+        <h2 id="nome-usuario">Usuário</h2>
+        <button id="editar-perfil" class="login-button">Editar Nome</button>
+      </div>
+
+      <div class="perfil-conquistas">
+        <h3>Suas Conquistas</h3>
+        <ul class="conquistas-lista">
+          <li>Dicas utilizadas: <span id="dicas-usadas">0</span></li>
+          <li>Acertos totais: <span id="total-acertos">0</span></li>
+          <li>Erros totais: <span id="total-erros">0</span></li>
+          <li>Quizzes concluídos: <span id="quizzes-feitos">0</span></li>
+          <li>Modalidades jogadas:</li>
+          <ul>
+            <li>Fácil: <span id="facil">0</span></li>
+            <li>Médio: <span id="medio">0</span></li>
+            <li>Difícil: <span id="dificil">0</span></li>
+          </ul>
+        </ul>
+
+        <button type="button" class="login-button" id="btn-novo-quiz" aria-label="Iniciar um novo quiz ou mudar a dificuldade">
+          Novo Quiz / Mudar Dificuldade
+        </button>
+
+        <div class="estrelas">
+          <h4>Estrelas conquistadas ⭐</h4>
+          <div id="estrela-container"></div>
+        </div>
+
+        <div id="mensagem-premio" class="premio hidden"></div>
+      </div>
+    </section>
+
+    <div id="modal-editar" class="modal hidden" role="dialog" aria-labelledby="editar-titulo">
+      <h2 id="editar-titulo">Editar Nome</h2>
+      <form id="form-editar" class="login-form">
+        <div class="form-group">
+          <label for="novo-nome">Novo nome</label>
+          <input type="text" id="novo-nome" />
+        </div>
+        <div class="form-group">
+          <button type="submit" class="login-button">Salvar alterações</button>
+          <button id="fechar-modal" type="button" class="login-button">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

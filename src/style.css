@@ -1,0 +1,864 @@
+/* ============================================================
+   VARIÁVEIS DE COR E TEMA GLOBAL (ACESSIBILIDADE DE CONTRASTE)
+   ============================================================ */
+:root {
+  --color-yellow-bg: rgb(255, 222, 0);
+  --color-white: #FFFFFF;
+  --color-blue-dark: #3753FF;
+  --color-text-dark: #000000;
+  --focus-outline-color: #3753FF;
+  --color-green-dark: #2E7D32;
+}
+
+/* ============================================================
+   RESET BÁSICO E CONFIGURAÇÃO DO BODY
+   ============================================================ */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--color-yellow-bg);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   LINK DE ACESSIBILIDADE PARA PULAR CONTEÚDO (WCAG 2.4.1)
+   ============================================================ */
+.skip-link {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background-color: var(--color-text-dark);
+  color: var(--color-white);
+  padding: 10px;
+  z-index: 1000;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 1px;
+}
+/* Torna visível e focado ao receber o TAB */
+.skip-link:focus {
+  clip: auto;
+  clip-path: none;
+  height: auto;
+  width: auto;
+  text-decoration: none;
+  position: static;
+  display: inline-block;
+  background-color: yellow; /* Alto contraste */
+  color: black;
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 4px;
+}
+
+/* ============================================================
+   CABEÇALHO E ELEMENTOS DE NAVEGAÇÃO
+   ============================================================ */
+.header {
+  padding: 10px 20px;
+  width: 100%;
+}
+.back-arrow {
+  font-size: 24px;
+  text-decoration: none;
+  color: var(--color-blue-dark);
+  margin-left: 10px;
+}
+.time {
+  color: var(--color-text-dark);
+  font-weight: 500;
+}
+
+/* ============================================================
+   TELAS PRINCIPAIS
+   ============================================================ */
+.main-screen,
+.login-screen {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 0 20px 40px;
+}
+
+/* ============================================================
+   TÍTULOS E FRASES
+   ============================================================ */
+.main-title {
+  font-size: 72px;
+  color: var(--color-white);
+  font-weight: 900;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.2);
+  margin-top: 50px;
+}
+.intro-phrase {
+  color: var(--color-white);
+  font-family: 'Nunito', sans-serif;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding: 0 15px;
+  line-height: 1.4;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  min-height: 80px;
+}
+.login-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--color-blue-dark);
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* ============================================================
+   IMAGENS E LOGOS
+   ============================================================ */
+.logo-image {
+  width: 300px; 
+  max-width: 80%;
+  height: auto;
+  object-fit: contain;
+  margin: 30px 0;
+}
+
+.logo-small {
+  width: 80px;
+  height: auto;
+  display: block;
+  margin: 0 auto 10px auto;
+}
+
+/* ============================================================
+   BOTÕES INTERATIVOS
+   ============================================================ */
+.start-button,
+.login-button {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 14px 28px;
+  border-radius: 50px;
+  min-height: 44px;
+  min-width: 44px;
+  text-align: center;
+  cursor: pointer;
+  width: 85%;
+  max-width: 350px;
+  margin-bottom: 20px;
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.start-button {
+  background-color: var(--color-white);
+  color: var(--color-blue-dark);
+}
+
+.login-button {
+  background-color: var(--color-blue-dark);
+  color: var(--color-white);
+  width: 100%;
+  margin-top: 10px;
+}
+
+.start-button:hover,
+.login-button:hover {
+  transform: scale(1.03);
+}
+
+.start-button:focus,
+.login-button:focus {
+  outline: 4px solid var(--focus-outline-color);
+  outline-offset: 4px;
+}
+/* ============================================================
+   FORMULÁRIOS
+   ============================================================ */
+.login-form {
+  background-color: var(--color-white);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.login-form h2 {
+  font-size: 24px;
+  color: var(--color-blue-dark);
+  margin-bottom: 10px;
+}
+.login-form label {
+  font-weight: bold;
+  color: var(--color-text-dark);
+}
+.login-form input[type="email"],
+.login-form input[type="password"],
+.login-form input[type="text"] {
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid var(--color-blue-dark);
+  border-radius: 8px;
+}
+
+/* ============================================================
+   CHECKBOX E LINKS
+   ============================================================ */
+.remember-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.link {
+  color: var(--color-blue-dark);
+  text-decoration: underline;
+  font-size: 14px;
+}
+.divider {
+  text-align: center;
+  font-weight: bold;
+  color: var(--color-text-dark);
+}
+
+/* ============================================================
+   FEEDBACK ACESSÍVEL
+   ============================================================ */
+.visually-hidden {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ============================================================
+   TEXTO INFORMATIVO DA TELA DE REDEFINIÇÃO
+   ============================================================ */
+.info-text {
+  font-size: 16px;
+  color: var(--color-text-dark);
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   MODAL DE SUCESSO
+   ============================================================ */
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-blue-dark);
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 300px;
+  margin: 20px auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  cursor: pointer;
+}
+.modal img {
+  width: 100px;
+  height: auto;
+  margin-bottom: 10px;
+}
+.modal-text {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--color-blue-dark);
+}
+.hidden {
+  display: none;
+}
+
+/* ============================================================
+   GRUPOS DE CAMPOS DO FORMULÁRIO
+   ============================================================ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.form-group input {
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid var(--color-blue-dark);
+  border-radius: 8px;
+}
+
+/* ============================================================
+   CONTAINER DE TIPO DE CONTA
+   ============================================================ */
+.account-type-container {
+  background-color: var(--color-white);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+/* ============================================================
+   BOTÕES DE OPÇÃO DE CONTA
+   ============================================================ */
+.account-options {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.account-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-blue-dark);
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.account-option:hover {
+  background-color: rgba(55, 83, 255, 0.05);
+}
+
+.account-option:focus {
+  outline: 4px solid var(--focus-outline-color);
+  outline-offset: 4px;
+}
+
+/* ============================================================
+   CORES POR NÍVEL DE DIFICULDADE
+   ============================================================ */
+.account-option.green {
+  background-color: #2E7D32; /* Verde - Fácil */
+  color: #fff;
+}
+
+.account-option.blue {
+  background-color: #3753FF; /* Azul - Médio */
+  color: #fff;
+}
+
+.account-option.red {
+  background-color: #F44336; /* Vermelho - Difícil */
+  color: #fff;
+}
+/* Cores de fundo por nível */
+body.facil {
+  background-color: #E8F5E9; /* verde claro */
+}
+
+body.medio {
+  background-color: #E3F2FD; /* azul claro */
+}
+
+body.dificil {
+  background-color: #FFEBEE; /* vermelho claro */
+}
+
+/* Estilo das alternativas */
+.quiz-option {
+  background-color: var(--color-white);
+  border: 2px solid var(--color-blue-dark);
+  padding: 10px;
+  margin: 8px 0;
+  width: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+/* Feedback visual */
+.feedback {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.feedback.correta {
+  background-color: #C8E6C9;
+  color: #2E7D32;
+}
+
+.feedback.incorreta {
+  background-color: #FFCDD2;
+  color: #C62828;
+}
+/* ============================================================
+   BARRA DE PROGRESSO DO QUIZ
+   ============================================================ */
+.quiz-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.progress-bar {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.progress-segment {
+  flex: 1;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.progress-segment.done {
+  background-color: var(--color-blue-dark);
+}
+
+/* ============================================================
+   PAINEL DE CONTADOR DE ACERTOS E ERROS
+   ============================================================ */
+.score-panel {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: var(--color-text-dark);
+}
+
+/* ============================================================
+   BOTÃO DE MOSTRAR DICA
+   ============================================================ */
+.dica-button {
+  background-color: var(--color-blue-dark);
+  color: var(--color-white);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.dica-button:hover {
+  background-color: #2c45cc;
+}
+
+.dica-button:focus {
+  outline: 4px solid var(--focus-outline-color);
+  outline-offset: 4px;
+}
+
+/* ============================================================
+   CAIXA DE DICA
+   ============================================================ */
+.dica {
+  background-color: #FFF8E1;
+  color: #333;
+  border-left: 6px solid #FFEB3B;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-style: italic;
+  text-align: left;
+  width: 100%;
+}
+
+/* ============================================================
+   BOTÃO DE PERFIL
+   ============================================================ */
+.perfil-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-blue-dark);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--color-blue-dark);
+  transition: background-color 0.3s ease;
+}
+
+.perfil-button:hover {
+  background-color: #f0f0f0;
+}
+
+.perfil-button:focus {
+  outline: 4px solid var(--focus-outline-color);
+  outline-offset: 4px;
+}
+/* ============================================================
+   PERFIL DO USUÁRIO
+   ============================================================ */
+.perfil-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.perfil-foto {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--color-blue-dark);
+}
+
+.perfil-conquistas {
+  width: 100%;
+  text-align: left;
+}
+
+.conquistas-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.conquistas-lista li {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.conquistas-lista ul {
+  margin-top: 4px;
+  margin-left: 16px;
+}
+
+.estrelas {
+  margin-top: 20px;
+  font-size: 20px;
+  color: #FFD700;
+}
+
+#estrela-container span {
+  font-size: 28px;
+  margin-right: 4px;
+}
+/* ============================================================
+   MODAL DE EDIÇÃO DE PERFIL
+   ============================================================ */
+#modal-editar {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-white);
+  border: 2px solid var(--color-blue-dark);
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 400px;
+}
+/* ============================================================
+   CONQUISTAS DO PERFIL
+   ============================================================ */
+.perfil-conquistas {
+  width: 100%;
+  text-align: left;
+}
+
+.conquistas-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.conquistas-lista li {
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+.conquistas-lista ul {
+  margin-top: 4px;
+  margin-left: 16px;
+}
+/* ============================================================
+   ESTRELAS DE CONQUISTA
+   ============================================================ */
+.estrelas {
+  margin-top: 20px;
+  font-size: 20px;
+  color: #FFD700;
+}
+
+#estrela-container span {
+  font-size: 28px;
+  margin-right: 4px;
+}
+/* ============================================================
+   TELA DE RESULTADO DO QUIZ
+   ============================================================ */
+.resultado-container {
+  max-width: 680px;
+  margin: 24px auto;
+  background-color: var(--color-white);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.resultado-container:focus {
+  outline: 4px solid var(--focus-outline-color);
+  outline-offset: 4px;
+}
+
+.resultado-container h1,
+.resultado-container h2 {
+  color: var(--color-blue-dark);
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 16px;
+}
+
+.mensagem {
+  font-size: 1.2rem;
+  color: var(--color-text-dark);
+  margin: 12px 0 20px;
+}
+
+.medalha {
+  font-size: 4.5rem;
+  line-height: 1;
+  margin: 12px 0;
+}
+
+.estrelas {
+  font-size: 1.8rem;
+  color: #FFD700; /* dourado */
+  margin: 8px 0 20px;
+}
+
+.logo-image {
+  width: 140px;
+  height: auto;
+  border-radius: 12px;
+  display: inline-block;
+  margin: 12px 0 20px;
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.botoes button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1.2;
+  min-width: 120px;
+}
+
+.botao-primario {
+  background-color: var(--color-blue-dark);
+  color: var(--color-white);
+}
+
+.botao-primario:hover,
+.botao-primario:focus {
+  background-color: #2c45cc;
+}
+
+.botao-secundario {
+  background-color: #e0e0e0;
+  color: var(--color-text-dark);
+}
+
+.botao-secundario:hover,
+.botao-secundario:focus {
+  background-color: #c7c7c7;
+}
+/* --- Ajuste da Imagem Carlos.png na Tela de Resultado --- */
+.resultado-image {
+    width: 100%; /* Ocupa a largura total do container */
+    max-width: 250px; /* Limita o tamanho máximo */
+    height: auto;
+    object-fit: contain; /* Garante que a imagem se ajuste proporcionalmente */
+    margin: 12px auto 20px; /* Centraliza horizontalmente e ajusta margens */
+    display: block;
+}
+
+/* Nota: Se o seletor abaixo estiver no seu CSS, ele pode estar limitando. */
+/* Se estiver, ajuste-o ou remova-o: */
+.resultado-container .logo-image {
+    width: 250px; /* Aumenta a imagem dentro do container */
+}
+/* ============================================================
+   TABELA DE PERGUNTAS DO CATEQUISTA
+   ============================================================ */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-size: 16px;
+  text-align: left;
+  background-color: var(--color-white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.styled-table thead {
+  background-color: var(--color-blue-dark);
+  color: var(--color-white);
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.styled-table tr:hover {
+  background-color: rgba(55, 83, 255, 0.05);
+}
+
+/* Botões de ação na tabela */
+.styled-table button {
+  background-color: var(--color-blue-dark);
+  color: var(--color-white);
+  border: none;
+  padding: 6px 12px;
+  margin-right: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.styled-table button:hover {
+  background-color: #2c45cc;
+}
+
+/* ============================================================
+   SEÇÃO DE CATEQUIZANDOS
+   ============================================================ */
+.catequizandos-section {
+  margin-top: 40px;
+  width: 100%;
+  background-color: var(--color-white);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.catequizandos-section h2 {
+  color: var(--color-blue-dark);
+  margin-bottom: 15px;
+}
+
+.catequizandos-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.catequizandos-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.catequizandos-list li:last-child {
+  border-bottom: none;
+}
+
+.catequizandos-list button {
+  background-color: var(--color-green-dark);
+  color: var(--color-white);
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.catequizandos-list button:hover {
+  background-color: #1b5e20;
+}
+/* ============================================================
+   MENSAGEM MOTIVACIONAL ANIMADA (RESULTADO)
+   ============================================================ */
+.mensagem-motivacao {
+    /* Centralização horizontal */
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%); 
+    
+    /* Posicionamento Vertical: Ajustado para ficar logo abaixo da caixa de resultado.
+       O 50% é o centro da tela, e 300px é um ajuste para baixo, fora da caixa. */
+    top: calc(50% + 150px); 
+    
+    /* Estilo do balão de feedback (usando as suas variáveis de cor) */
+    padding: 10px 20px;
+    background-color: var(--color-white); 
+    color: var(--color-blue-dark);
+    border: 2px solid var(--color-blue-dark); 
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    font-size: 1.1em;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap; /* Impede quebras de linha indesejadas */
+    
+    /* Transição de opacidade para a animação */
+    opacity: 0; 
+    transition: opacity 0.5s ease-in-out; 
+    z-index: 10; 
+}
+
+/* Classe ativada pelo JS para exibir a mensagem com fade-in */
+.mensagem-motivacao.animar-motivacao {
+    opacity: 1;
+}
+
+/* **Importante:** Garantir que o <body> seja o ponto de referência para 'position: absolute' */
+body {
+    /* ... (seus estilos existentes) ... */
+    position: relative; /* Adicione ou garanta que 'position: relative' esteja aqui */
+    min-height: 100vh;
+}

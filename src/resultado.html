@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <!-- ============================================================
+       METADADOS E FONTES
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <title>Resultado do quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ============================================================
+       LINK DE ACESSIBILIDADE PARA PULAR CONTEÚDO
+       ============================================================ -->
+  <a class="skip-link" href="#conteudo-principal">Pular para o conteúdo</a>
+
+  <!-- ============================================================
+       CONTEÚDO PRINCIPAL
+       ============================================================ -->
+  <main id="conteudo-principal" role="main" aria-labelledby="titulo-pagina">
+    <section class="resultado-container" role="region" aria-labelledby="resultado-heading">
+      <h2 id="resultado-heading">Resultado final</h2>
+
+      <!-- Mensagem dinâmica anunciada pelo leitor de tela -->
+      <p id="mensagem-resultado" class="mensagem" aria-live="assertive"></p>
+
+      <!-- Medalha e estrelas (inicialmente ocultas) -->
+      <figure id="medalha-figura" class="medalha-figura hidden" role="img" aria-label="Medalha de ouro com o número 1, cercada por estrelas">
+        <div class="medalha" aria-hidden="true">🥇</div>
+        <figcaption class="medalha-legenda">Medalha de ouro pelos seus acertos</figcaption>
+      </figure>
+
+      <div id="estrelas" class="estrelas hidden" aria-hidden="true" aria-label="Estrelas de celebração">⭐ ⭐ ⭐</div>
+
+      <!-- Imagem com descrição acessível -->
+      <img
+        src="carlos.png"
+        class="logo-image"
+        alt="São Carlos Acutis, jovem santo padroeiro da internet, sorrindo, inspirando os estudantes a perseverarem"
+      />
+
+      <!-- Painel de ações -->
+      <nav class="botoes" aria-label="Ações após o resultado">
+        <button type="button" class="botao-primario" id="btn-perfil" aria-label="Ir para seu perfil">👤 Perfil</button>
+        <button type="button" class="botao-secundario" id="btn-repetir" aria-label="Jogar novamente">🔁 Jogar novamente</button>
+      </nav>
+    </section>
+  </main>
+  <!-- ============================================================
+       SCRIPT DE FUNCIONALIDADES
+       ============================================================ -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // ============================================================
+      // Lê dados salvos no localStorage
+      // ============================================================
+      const acertos = Number(localStorage.getItem("resultado_acertos") || 0);
+      const erros = Number(localStorage.getItem("resultado_erros") || 0);
+      const nivel = (localStorage.getItem("resultado_nivel") || "").toLowerCase();
+
+      const msg = document.getElementById("mensagem-resultado");
+      const medalhaFigura = document.getElementById("medalha-figura");
+      const estrelas = document.getElementById("estrelas");
+
+      // ============================================================
+      // Mensagem personalizada
+      // ============================================================
+      if (nivel) {
+        msg.textContent = `Você atingiu ${acertos} acertos no nível ${nivel}.`;
+      } else {
+        msg.textContent = `Você atingiu ${acertos} acertos.`;
+      }
+
+      // ============================================================
+      // Exibe medalha e estrelas apenas se tiver 3 ou mais acertos
+      // ============================================================
+      if (acertos >= 3) {
+        msg.textContent += " 🎉 Parabéns! Você ganhou uma medalha!";
+        medalhaFigura.classList.remove("hidden");
+        estrelas.classList.remove("hidden");
+      } else {
+        msg.textContent += " Continue praticando para conquistar sua medalha!";
+      }
+
+      // ============================================================
+      // Ações de navegação
+      // ============================================================
+      document.getElementById("btn-perfil").addEventListener("click", () => {
+        window.location.href = "perfil.html";
+      });
+
+      document.getElementById("btn-repetir").addEventListener("click", () => {
+        window.location.href = "quiz.html";
+      });
+
+      // ============================================================
+      // Foco acessível no container
+      // ============================================================
+      const container = document.querySelector(".resultado-container");
+      container.setAttribute("tabindex", "-1");
+      container.focus();
+    });
+  </script>
+</body>
+</html>

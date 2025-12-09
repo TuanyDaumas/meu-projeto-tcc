@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <!-- ============================================================
+       METADADOS E FONTES
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Católico</title>
+
+  <!-- Fonte personalizada para frase de introdução -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet" />
+
+  <!-- Estilos globais -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ============================================================
+       LINK DE ACESSIBILIDADE PARA PULAR CONTEÚDO (WCAG 2.4.1)
+       ============================================================ -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+  <!-- ============================================================
+       CABEÇALHO SEMÂNTICO
+       ============================================================ -->
+  <header role="banner" class="header"></header>
+
+  <!-- ============================================================
+       CONTEÚDO PRINCIPAL COM LANDMARK E IDENTIFICADORES
+       ============================================================ -->
+  <main id="main-content" role="main" class="main-screen">
+    <!-- Título principal mais descritivo -->
+    <h1 class="main-title">Quiz Católico</h1>
+
+    <!-- Frase com efeito de digitação e aria-live -->
+    <span class="intro-phrase" id="typing-text" aria-live="polite" role="status"></span>
+
+    <!-- Logo com descrição alternativa -->
+    <img src="logo.png"
+         alt="Brasão do Vaticano, composto pela tiara papal e duas chaves, em fundo amarelo."
+         class="logo-image" />
+
+    <!-- Botão de início com acessibilidade -->
+<a href="login.html"
+   class="start-button"
+   role="button"
+   aria-label="START - Iniciar o quiz, ir para a tela de login.">START</a>
+
+
+  </main>
+
+  <!-- ============================================================
+       SCRIPT DE FUNCIONALIDADES
+       ============================================================ -->
+  <script src="script.js"></script>
+</body>
+</html>

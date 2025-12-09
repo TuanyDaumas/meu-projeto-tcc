@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <!-- ============================================================
+       METADADOS E FONTES
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dificuldade - Perfil Pessoal</title>
+
+  <!-- Fonte moderna para título -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ============================================================
+       LINK DE ACESSIBILIDADE PARA PULAR CONTEÚDO
+       ============================================================ -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+  <!-- ============================================================
+       CONTEÚDO PRINCIPAL COM OPÇÕES DE DIFICULDADE
+       ============================================================ -->
+  <main id="main-content" class="login-screen">
+    <section class="account-type-container" role="region" aria-labelledby="difficulty-title">
+      <h1 id="difficulty-title" class="login-title">Qual dificuldade você deseja?</h1>
+      <p class="info-text">Pode mudar a dificuldade quando quiser.</p>
+
+      <!-- Feedback acessível para leitores de tela -->
+      <div id="nivel-feedback" class="visually-hidden" role="status" aria-live="polite"></div>
+
+      <!-- Botões de seleção de dificuldade -->
+      <div class="account-options" role="group" aria-describedby="difficulty-title">
+        <button class="account-option green" onclick="selecionarNivel('facil')" role="button" aria-label="Selecionar dificuldade fácil">
+          Fácil
+        </button>
+
+        <button class="account-option blue" onclick="selecionarNivel('medio')" role="button" aria-label="Selecionar dificuldade média">
+          Médio
+        </button>
+
+        <button class="account-option red" onclick="selecionarNivel('dificil')" role="button" aria-label="Selecionar dificuldade difícil">
+          Difícil
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================
+       SCRIPT DE FUNCIONALIDADES
+       ============================================================ -->
+  <script>
+    // ============================================================
+    // Função para salvar nível escolhido e redirecionar ao quiz
+    // ============================================================
+    function selecionarNivel(nivel) {
+      // Salva nível no localStorage
+      localStorage.setItem('nivelQuiz', nivel);
+
+      // Feedback acessível para leitores de tela
+      const feedback = document.getElementById("nivel-feedback");
+      feedback.textContent = "Nível " + nivel + " selecionado!";
+
+      // Redireciona para quiz.html
+      window.location.href = 'quiz.html';
+    }
+  </script>
+</body>
+</html>

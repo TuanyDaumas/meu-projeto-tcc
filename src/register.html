@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <!-- ============================================================
+       METADADOS E FONTES
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro - Quiz Católico</title>
+
+  <!-- Fonte moderna para título -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ============================================================
+       LINK DE ACESSIBILIDADE PARA PULAR CONTEÚDO
+       ============================================================ -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+  <!-- ============================================================
+       CABEÇALHO COM VOLTAR
+       ============================================================ -->
+  <header role="banner" class="header">
+    <a href="login.html" class="back-arrow" aria-label="Voltar para a tela de login">←</a>
+  </header>
+
+  <!-- ============================================================
+       CONTEÚDO PRINCIPAL COM FORMULÁRIO DE CADASTRO
+       ============================================================ -->
+  <main id="main-content" role="main" class="login-screen">
+    <!-- Ajuste: formulário controlado via JavaScript para enviar ao backend Flask -->
+    <form id="register-form" class="login-form" aria-labelledby="form-title">
+      <fieldset>
+        <legend id="form-title" class="login-title">Crie uma conta</legend>
+
+        <!-- Campos obrigatórios -->
+        <div class="form-group">
+          <label for="nome">Primeiro nome</label>
+          <input type="text" id="nome" name="nome" required aria-required="true" />
+        </div>
+
+        <div class="form-group">
+          <label for="sobrenome">Sobrenome</label>
+          <input type="text" id="sobrenome" name="sobrenome" required aria-required="true" />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required aria-required="true" />
+        </div>
+
+        <div class="form-group">
+          <label for="senha">Senha</label>
+          <input type="password" id="senha" name="senha" required aria-required="true" />
+        </div>
+
+        <div class="form-group">
+          <label for="confirmar">Confirmar senha</label>
+          <input type="password" id="confirmar" name="confirmar" required aria-required="true" />
+        </div>
+
+        <!-- Checkbox lembrar -->
+        <div class="remember-section">
+          <input type="checkbox" id="lembrar" name="lembrar" />
+          <label for="lembrar">Lembre-me</label>
+        </div>
+
+        <!-- Feedback acessível -->
+        <div id="cadastro-feedback" class="feedback" aria-live="polite" role="alert"></div>
+
+        <!-- Botão de cadastro -->
+        <button type="submit" class="login-button" aria-label="Cadastrar nova conta">Cadastrar</button>
+      </fieldset>
+    </form>
+
+    <!-- ============================================================
+         MODAL DE SUCESSO
+         ============================================================ -->
+    <div id="modal-sucesso" class="modal hidden" role="alertdialog" tabindex="0" aria-labelledby="modal-descricao">
+      <img src="sucesso.png" alt="Imagem de sucesso com figura religiosa sorrindo" />
+      <p id="modal-descricao" class="modal-text">Sucesso!</p>
+    </div>
+  </main>
+
+  <!-- ============================================================
+       SCRIPT DE FUNCIONALIDADES
+       ============================================================ -->
+  <script>
+  // ============================================================
+  // SCRIPT DE CADASTRO: envia dados ao backend Flask e mostra feedback
+  // ============================================================
+  const form = document.getElementById("register-form");
+  const feedback = document.getElementById("cadastro-feedback");
+  const modal = document.getElementById("modal-sucesso");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault(); // evita recarregar a página
+
+    const nome = document.getElementById("nome").value.trim();
+    const sobrenome = document.getElementById("sobrenome").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("senha").value;
+    const confirmar = document.getElementById("confirmar").value;
+
+    // Validação simples de senha
+    if (senha !== confirmar) {
+      feedback.textContent = "As senhas não coincidem.";
+      feedback.className = "feedback error";
+      return;
+    }
+
+    // Junta nome + sobrenome para enviar ao backend
+    const formData = new FormData();
+    formData.append("nome", `${nome} ${sobrenome}`);
+    formData.append("email", email);
+    formData.append("senha", senha);
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/cadastro", {
+        method: "POST",
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.ok) {
+        feedback.textContent = result.message;
+        feedback.className = "feedback success";
+
+        // 👇 Salva o email no localStorage para uso na próxima tela
+        localStorage.setItem("usuario_email", email);
+
+        // Exibe modal de sucesso
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+          modal.classList.add("hidden");
+          window.location.href = "tipo-de-conta.html"; // redireciona para escolha de perfil
+        }, 2000);
+      } else {
+        feedback.textContent = result.message;
+        feedback.className = "feedback error";
+      }
+    } catch (error) {
+      feedback.textContent = "Erro de conexão com o servidor.";
+      feedback.className = "feedback error";
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <!-- ============================================================
+       METADADOS E FONTES
+       ============================================================ -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catequista - Painel</title>
+
+  <!-- Fonte moderna para título -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ============================================================
+       LINK DE ACESSIBILIDADE PARA PULAR CONTEÚDO
+       ============================================================ -->
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+  <!-- ============================================================
+       CONTEÚDO PRINCIPAL
+       ============================================================ -->
+  <main id="main-content" class="login-screen">
+    <section class="account-type-container" role="region" aria-labelledby="catequista-title">
+      <h1 id="catequista-title" class="login-title">Painel do Catequista</h1>
+      <p class="info-text">Cadastre perguntas e gerencie seus quizzes.</p>
+
+      <!-- ============================================================
+           FORMULÁRIO DE CADASTRO DE PERGUNTAS
+           ============================================================ -->
+      <form class="login-form" id="quiz-form">
+        <div class="form-group">
+          <label for="tema">Tema das perguntas</label>
+          <input type="text" id="tema" name="tema" required aria-required="true" />
+        </div>
+
+        <div class="form-group">
+          <label for="pergunta">Pergunta</label>
+          <textarea id="pergunta" name="pergunta" rows="3" required aria-required="true"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="alternativas">Alternativas (separe por ponto e vírgula)</label>
+          <input type="text" id="alternativas" name="alternativas" required aria-required="true" />
+        </div>
+
+        <div class="form-group">
+          <label for="dica">Dica (opcional)</label>
+          <input type="text" id="dica" name="dica" />
+        </div>
+
+        <div class="form-group">
+          <label for="correta">Resposta correta</label>
+          <input type="text" id="correta" name="correta" required aria-required="true" />
+        </div>
+
+        <div class="form-group">
+          <label for="nivel">Nível de dificuldade</label>
+          <select id="nivel" name="nivel" required aria-required="true">
+            <option value="">Selecione</option>
+            <option value="facil">Fácil</option>
+            <option value="medio">Médio</option>
+            <option value="dificil">Difícil</option>
+          </select>
+        </div>
+
+        <button type="submit" class="login-button" aria-label="Cadastrar pergunta">Cadastrar Pergunta</button>
+      </form>
+
+      <!-- Feedback acessível -->
+      <div id="quiz-feedback" class="feedback" aria-live="polite" role="status"></div>
+
+      <!-- ============================================================
+           LISTA DE PERGUNTAS CADASTRADAS
+           ============================================================ -->
+      <h2 class="section-title">Minhas Perguntas</h2>
+      <table id="tabela-perguntas" class="styled-table">
+        <thead>
+          <tr>
+            <th>Tema</th>
+            <th>Pergunta</th>
+            <th>Nível</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Perguntas serão carregadas via JS -->
+        </tbody>
+      </table>
+  </section>
+    </main>
+  <!-- ============================================================
+       SCRIPT DE FUNCIONALIDADES
+       ============================================================ -->
+  <script>
+    // ============================================================
+    // CADASTRAR PERGUNTA
+    // ============================================================
+    document.getElementById('quiz-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const tema = document.getElementById('tema').value.trim();
+      const pergunta = document.getElementById('pergunta').value.trim();
+      const alternativas = document.getElementById('alternativas').value.trim();
+      const correta = document.getElementById('correta').value.trim();
+      const nivel = document.getElementById('nivel').value;
+      const feedback = document.getElementById('quiz-feedback');
+
+      const email = localStorage.getItem("usuario_email");
+      if (!email) {
+        feedback.textContent = "Erro: usuário não identificado. Faça login novamente.";
+        feedback.className = "feedback error";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("tema", tema);
+      formData.append("pergunta", pergunta);
+      formData.append("alternativas", alternativas);
+      formData.append("correta", correta);
+      formData.append("nivel", nivel);
+      formData.append("email_autor", email);
+
+      try {
+        const response = await fetch("http://127.0.0.1:5000/add-pergunta", {
+          method: "POST",
+          body: formData
+        });
+        const result = await response.json();
+
+        if (result.ok) {
+          feedback.textContent = result.message;
+          feedback.className = "feedback success";
+          this.reset();
+          carregarPerguntas(); // atualiza lista
+        } else {
+          feedback.textContent = result.message;
+          feedback.className = "feedback error";
+        }
+      } catch (error) {
+        feedback.textContent = "Erro de conexão com o servidor.";
+        feedback.className = "feedback error";
+      }
+    });
+
+    // ============================================================
+    // CARREGAR MINHAS PERGUNTAS
+    // ============================================================
+    async function carregarPerguntas() {
+      const email = localStorage.getItem("usuario_email");
+      const tabela = document.querySelector("#tabela-perguntas tbody");
+      tabela.innerHTML = "";
+
+      try {
+        const response = await fetch(`http://127.0.0.1:5000/minhas-perguntas?email=${email}`);
+        const result = await response.json();
+
+        if (result.ok) {
+          result.perguntas.forEach(p => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${p.tema}</td>
+              <td>${p.pergunta}</td>
+              <td>${p.nivel}</td>
+              <td>
+                <button onclick="editarPergunta(${p.id})">Editar</button>
+                <button onclick="excluirPergunta(${p.id})">Excluir</button>
+              </td>
+            `;
+            tabela.appendChild(row);
+          });
+        }
+      } catch (error) {
+        console.error("Erro ao carregar perguntas:", error);
+      }
+    }
+
+    // ============================================================
+    // EXCLUIR PERGUNTA
+    // ============================================================
+    async function excluirPergunta(id) {
+      const formData = new FormData();
+      formData.append("id", id);
+
+      const response = await fetch("http://127.0.0.1:5000/excluir-pergunta", {
+        method: "POST",
+        body: formData
+      });
+      const result = await response.json();
+      if (result.ok) {
+        carregarPerguntas();
+      } else {
+        alert(result.message);
+      }
+    }
+
+    // ============================================================
+    // EDITAR PERGUNTA (simples alerta, pode evoluir para modal)
+    // ============================================================
+    async function editarPergunta(id) {
+  try {
+    const email = localStorage.getItem("usuario_email");
+    const response = await fetch(`http://127.0.0.1:5000/minhas-perguntas?email=${email}`);
+    const result = await response.json();
+
+    if (result.ok) {
+      const pergunta = result.perguntas.find(p => p.id === id);
+      if (!pergunta) {
+        alert("Pergunta não encontrada!");
+        return;
+      }
+
+      document.getElementById("tema").value = pergunta.tema || "";
+      document.getElementById("pergunta").value = pergunta.pergunta || "";
+      document.getElementById("alternativas").value = (pergunta.alternativas || []).join(";");
+      document.getElementById("correta").value = pergunta.correta || "";
+      document.getElementById("dica").value = pergunta.dica || "";
+      document.getElementById("nivel").value = pergunta.nivel || "facil";
+
+      perguntaEditandoId = id;
+      const submitBtn = document.querySelector("#quiz-form button[type='submit']");
+      if (submitBtn) submitBtn.textContent = "Salvar edição";
+    }
+  } catch (error) {
+    console.error("Erro ao carregar pergunta para edição:", error);
+  }
+}
+// ============================================================
+// INICIALIZAÇÃO AUTOMÁTICA AO ABRIR A PÁGINA
+// ============================================================
+if (document.querySelector("#tabela-perguntas")) {
+  carregarPerguntas();
+}
+window.carregarPerguntas = carregarPerguntas;
+  </script>
+</body>
+</html>
+
