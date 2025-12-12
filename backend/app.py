@@ -24,7 +24,6 @@ print("DB_NAME:", DB_NAME)
 # INICIALIZAÇÃO DO FLASK
 # ============================================================
 app = Flask(__name__)
-# Certifique-se de que a pasta 'static/fotos' exista no mesmo nível do app.py
 CORS(app, resources={r"/*": {"origins": "*"}})  # Libera todas as origens
 
 # ============================================================
@@ -379,7 +378,6 @@ def update_estatisticas():
 # ============================================================
 @app.route("/contar-dica", methods=["POST"])
 def contar_dica():
-    # O JS está enviando JSON, então usamos request.get_json()
     data = request.get_json()
     email = data.get("email")
 
@@ -438,10 +436,9 @@ def editar_perfil():
             cursor.execute("UPDATE usuarios SET nome=%s WHERE email=%s", (novo_nome, email))
 
         if foto:
-            # 1. Define o nome do arquivo (Corrigido: substitui caracteres especiais por '_')
             extensao = "png"
             
-            # Cria um nome de arquivo seguro a partir do email (ex: pessoal_gmail_com.png)
+            # Cria um nome de arquivo seguro a partir do email 
             nome_base_seguro = email.replace('@', '_').replace('.', '_')
             nome_arquivo = f"{nome_base_seguro}.{extensao}"
             
@@ -459,7 +456,7 @@ def editar_perfil():
             cursor.execute("UPDATE usuarios SET foto_url=%s WHERE email=%s", (foto_url_db, email))
         db.commit()
 
-        # Buscar usuário atualizado (inclui 'foto_url' na busca)
+        # Buscar usuário atualizado 
         cursor.execute("SELECT id, nome, email, perfil, foto_url FROM usuarios WHERE email=%s", (email,))
         user = cursor.fetchone()
 
@@ -510,7 +507,7 @@ def get_perfil():
         db = get_db()
         cursor = db.cursor(dictionary=True)
 
-        # Buscar usuário (AGORA INCLUI foto_url)
+        # Buscar usuário 
         cursor.execute("SELECT id, nome, email, perfil, foto_url FROM usuarios WHERE email=%s", (email,))
         user = cursor.fetchone()
 
