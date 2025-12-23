@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quiz Interativo</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz Interativo</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <main id="main-content" class="login-screen">
-    <section class="account-type-container" role="region" aria-labelledby="quiz-title">
-      <h1 id="quiz-title" class="login-title">Quiz</h1>
-      <a href="perfil.html" class="perfil-button" aria-label="Ver perfil do usuário">👤 Perfil</a>
+    <main id="main-content" class="login-screen">
+    <section class="account-type-container" role="region" aria-labelledby="quiz-title">
+      <h1 id="quiz-title" class="login-title">Quiz</h1>
+      <a href="perfil.html" class="perfil-button" aria-label="Ver perfil do usuário">👤 Perfil</a>
 
-            <div class="quiz-status">
-        <div id="progress-bar" class="progress-bar"></div>
-        <div class="score-panel">
-          <span id="contador">0 / 0</span>
-          <span class="score certo">✔️ <span id="acertos">0</span></span>
-          <span class="score errado">❌ <span id="erros">0</span></span>
-        </div>
-      </div>
+            <div class="quiz-status">
+        <div id="progress-bar" class="progress-bar"></div>
+        <div class="score-panel">
+          <span id="contador">0 / 0</span>
+          <span class="score certo">✔️ <span id="acertos">0</span></span>
+          <span class="score errado">❌ <span id="erros">0</span></span>
+        </div>
+      </div>
 
-            <div id="feedback" class="hidden" role="status" aria-live="polite"></div>
-      <div id="quiz-container"></div>
-      <button id="mostrar-dica" class="dica-button">Mostrar dica ⬇️</button>
-      <div id="dica" class="dica hidden"></div>
-    </section>
-  </main>
+            <div id="feedback" class="hidden" role="status" aria-live="polite"></div>
+      <div id="quiz-container"></div>
+      <button id="mostrar-dica" class="dica-button">Mostrar dica ⬇️</button>
+      <div id="dica" class="dica hidden"></div>
+    </section>
+  </main>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

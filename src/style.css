@@ -25,8 +25,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  position: relative;
 }
-
 /* ============================================================
    LINK DE ACESSIBILIDADE PARA PULAR CONTEÚDO (WCAG 2.4.1)
    ============================================================ */
@@ -38,17 +38,14 @@ body {
   color: var(--color-white);
   padding: 10px;
   z-index: 1000;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
   height: 1px;
   overflow: hidden;
   white-space: nowrap;
   width: 1px;
+  opacity: 0;
 }
 /* Torna visível e focado ao receber o TAB */
 .skip-link:focus {
-  clip: auto;
-  clip-path: none;
   height: auto;
   width: auto;
   text-decoration: none;
@@ -58,6 +55,7 @@ body {
   color: black;
   outline: 2px solid var(--focus-outline-color);
   outline-offset: 4px;
+  opacity: 1;
 }
 
 /* ============================================================
@@ -721,10 +719,8 @@ body.dificil {
     display: block;
 }
 
-/* Nota: Se o seletor abaixo estiver no seu CSS, ele pode estar limitando. */
-/* Se estiver, ajuste-o ou remova-o: */
 .resultado-container .logo-image {
-    width: 250px; /* Aumenta a imagem dentro do container */
+    width: 250px;
 }
 /* ============================================================
    TABELA DE PERGUNTAS DO CATEQUISTA
@@ -828,9 +824,6 @@ body.dificil {
     position: absolute; 
     left: 50%;
     transform: translateX(-50%); 
-    
-    /* Posicionamento Vertical: Ajustado para ficar logo abaixo da caixa de resultado.
-       O 50% é o centro da tela, e 300px é um ajuste para baixo, fora da caixa. */
     top: calc(50% + 150px); 
     
     /* Estilo do balão de feedback (usando as suas variáveis de cor) */
@@ -854,11 +847,4 @@ body.dificil {
 /* Classe ativada pelo JS para exibir a mensagem com fade-in */
 .mensagem-motivacao.animar-motivacao {
     opacity: 1;
-}
-
-/* **Importante:** Garantir que o <body> seja o ponto de referência para 'position: absolute' */
-body {
-    /* ... (seus estilos existentes) ... */
-    position: relative; /* Adicione ou garanta que 'position: relative' esteja aqui */
-    min-height: 100vh;
 }

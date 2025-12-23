@@ -1,101 +1,98 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tipo de Conta - Quiz Católico</title>
+ <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tipo de Conta - Quiz Católico</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+  <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
 
-  <main id="main-content" class="login-screen">
-    <section class="account-type-container" role="region" aria-labelledby="account-type-title">
-      <h1 id="account-type-title" class="login-title">Que tipo de conta gostaria de criar?</h1>
-                  <div id="nav-status" class="visually-hidden" role="status" aria-live="polite"></div>
+  <main id="main-content" class="login-screen">
+    <section class="account-type-container" role="region" aria-labelledby="account-type-title">
+      <h1 id="account-type-title" class="login-title">Que tipo de conta gostaria de criar?</h1>
+                <div id="nav-status" class="visually-hidden" role="status" aria-live="polite"></div>
 
-      <div class="account-options" role="group" aria-describedby="account-type-title">
-                <button
-          id="btn-pessoal"
-          class="account-option"
-          type="button"
-          aria-label="Selecionar conta pessoal"
-          data-target="dificuldade.html"         >
-          <div class="icon-box blue" aria-hidden="true">
-            <span class="icon">👤</span>
-          </div>
-          <span class="label">Pessoal</span>
-        </button>
+      <div class="account-options"> 
+                        <button
+          id="btn-pessoal"
+          class="account-option"
+          type="button"
+          aria-label="Pessoal, selecionar conta"  data-target="dificuldade.html" >
+          <div class="icon-box blue" aria-hidden="true">
+            <span class="icon">👤</span>
+          </div>
+          <span class="label">Pessoal</span>
+        </button>
 
-                <button
-          id="btn-catequista"
-          class="account-option"
-          type="button"
-          aria-label="Selecionar conta catequista"
-          data-target="catequista.html"
-        >
-          <div class="icon-box green" aria-hidden="true">
-            <span class="icon">📖</span>
-          </div>
-          <span class="label">Catequista</span>
-        </button>
-      </div>
-      
-          </section>
-  </main>
+               <button
+          id="btn-catequista"
+          class="account-option"
+          type="button"
+          aria-label="Catequista, selecionar conta" data-target="catequista.html"
+        >
+          <div class="icon-box green" aria-hidden="true">
+            <span class="icon">📖</span>
+          </div>
+          <span class="label">Catequista</span>
+        </button>
+      </div>
+      
+           </section>
+  </main>
 
-    <noscript>
-    <p style="padding:12px; background:#000; color:#fff; text-align:center;">
-      Este aplicativo precisa de JavaScript habilitado para funcionar corretamente.
-    </p>
-  </noscript>
-  <script src="script.js" defer></script>
-  <script>
-  function atualizarPerfil(perfil, destino) {
-    const email = localStorage.getItem("usuario_email");
-    const feedback = document.getElementById("nav-status");
+    <noscript>
+    <p style="padding:12px; background:#000; color:#fff; text-align:center;">
+      Este aplicativo precisa de JavaScript habilitado para funcionar corretamente.
+    </p>
+  </noscript>
+  <script src="script.js" defer></script>
+  <script>
+  function atualizarPerfil(perfil, destino) {
+    const email = localStorage.getItem("usuario_email");
+    const feedback = document.getElementById("nav-status");
 
-    if (!email) {
-      feedback.textContent = "Não foi possível identificar seu usuário. Faça login novamente.";
-      feedback.className = "feedback error";
-      return;
-    }
+    if (!email) {
+      feedback.textContent = "Não foi possível identificar seu usuário. Faça login novamente.";
+      feedback.className = "feedback error";
+      return;
+    }
 
-    const formData = new FormData();
-    formData.append("email", email);
-    formData.append("perfil", perfil);
+    const formData = new FormData();
+    formData.append("email", email);
+    formData.append("perfil", perfil);
 
-    fetch("http://127.0.0.1:5000/set-perfil", { method: "POST", body: formData })
-      .then(res => res.json())
-      .then(result => {
-        if (result.ok) {
-          feedback.textContent = "Perfil atualizado!";
-          feedback.className = "feedback success";
-          // redireciona para a área escolhida
-          window.location.href = destino;
-        } else {
-          feedback.textContent = result.message;
-          feedback.className = "feedback error";
-        }
-      })
-      .catch(() => {
-        feedback.textContent = "Erro de conexão ao atualizar perfil.";
-        feedback.className = "feedback error";
-      });
-  }
+    fetch("http://127.0.0.1:5000/set-perfil", { method: "POST", body: formData })
+      .then(res => res.json())
+      .then(result => {
+        if (result.ok) {
+          feedback.textContent = "Perfil atualizado!";
+          feedback.className = "feedback success";
+          // redireciona para a área escolhida
+          window.location.href = destino;
+        } else {
+          feedback.textContent = result.message;
+          feedback.className = "feedback error";
+        }
+      })
+      .catch(() => {
+        feedback.textContent = "Erro de conexão ao atualizar perfil.";
+        feedback.className = "feedback error";
+     });
+  }
 
-  document.getElementById("btn-pessoal").addEventListener("click", () => {
-    //Redireciona para a escolha de nível
-    atualizarPerfil("catequizando", "pessoal.html"); 
-  });
+  document.getElementById("btn-pessoal").addEventListener("click", () => {
+    //Redireciona para a escolha de nível
+    atualizarPerfil("catequizando", "pessoal.html"); 
+  });
 
-  document.getElementById("btn-catequista").addEventListener("click", () => {
-    atualizarPerfil("catequista", "catequista.html");
-  });
+  document.getElementById("btn-catequista").addEventListener("click", () => {
+    atualizarPerfil("catequista", "catequista.html");
+  });
 
-  
 </script>
 </body>
 </html>

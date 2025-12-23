@@ -8,7 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Catequista - Painel</title>
 
-  <!-- Fonte moderna para título -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -72,27 +71,29 @@
       <div id="quiz-feedback" class="feedback" aria-live="polite" role="status"></div>
 
       <!-- ============================================================
-           LISTA DE PERGUNTAS CADASTRADAS
-           ============================================================ -->
-      <h2 class="section-title">Minhas Perguntas</h2>
-      <table id="tabela-perguntas" class="styled-table">
-        <thead>
-          <tr>
-            <th>Tema</th>
-            <th>Pergunta</th>
-            <th>Nível</th>
-            <th>Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- Perguntas serão carregadas via JS -->
-        </tbody>
-      </table>
-  </section>
-    </main>
-  <!-- ============================================================
-       SCRIPT DE FUNCIONALIDADES
-       ============================================================ -->
+     LISTA DE PERGUNTAS CADASTRADAS
+     ============================================================ -->
+<h2 class="section-title">Minhas Perguntas</h2>
+<table id="tabela-perguntas" class="styled-table">
+  <!-- Título descritivo da tabela -->
+  <caption id="tabela-perguntas-titulo">
+    Lista de Perguntas Cadastradas
+  </caption>
+  <thead>
+    <tr>
+      <!-- Cabeçalhos com escopo definido -->
+      <th scope="col">Tema</th>
+      <th scope="col">Pergunta</th>
+      <th scope="col">Nível</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Perguntas serão carregadas via JS -->
+  </tbody>
+</table>
+</section>
+</main>
   <script>
     // ============================================================
     // CADASTRAR PERGUNTA
@@ -196,7 +197,7 @@
     }
 
     // ============================================================
-    // EDITAR PERGUNTA (simples alerta, pode evoluir para modal)
+    // EDITAR PERGUNTA  
     // ============================================================
     async function editarPergunta(id) {
   try {

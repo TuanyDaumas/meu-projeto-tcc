@@ -28,21 +28,14 @@ const elProgressBar = document.getElementById("progress-bar");
 document.addEventListener('DOMContentLoaded', () => {
   // 1. Efeito de digitação na tela inicial
   const targetElement = document.getElementById('typing-text');
-  const phrase = "Aprenda e divirta-se com desafios interativos";
-  let charIndex = 0;
-  const typingSpeed = 70;
-  function typeWriter() {
-    if (targetElement && charIndex < phrase.length) {
-      targetElement.textContent += phrase.charAt(charIndex);
-      charIndex++;
-      setTimeout(typeWriter, typingSpeed);
-    }
-  }
-  if (targetElement) {
-    targetElement.setAttribute('aria-live', 'polite');
-    targetElement.setAttribute('role', 'status');
-    typeWriter();
-  }
+  const phrase = "Aprenda e divirta-se com desafios interativos";
+  
+  if (targetElement) {
+    // CORREÇÃO: Injeta o texto completo imediatamente.
+    targetElement.textContent = phrase; 
+    targetElement.setAttribute('aria-live', 'polite');
+    targetElement.setAttribute('role', 'status');
+  }
 
   // 2. Login
   const loginForm = document.getElementById('login-form');
@@ -260,14 +253,24 @@ if (resetForm) {
 // Funções do quiz
 // ============================================================
 
-// Selecionar nível
 function selecionarNivel(nivel) {
-  localStorage.setItem('nivelQuiz', nivel);
-  const feedback = document.getElementById("nivel-feedback");
-  if (feedback) feedback.textContent = "Nível " + nivel + " selecionado!";
-  window.location.href = 'quiz.html';
+  localStorage.setItem('nivelQuiz', nivel);
+  const feedback = document.getElementById("nivel-feedback");
+  if (feedback) {
+    // 1. Injeta o feedback para ser lido
+    feedback.textContent = "Nível " + nivel + " selecionado!"; 
+    
+    // 2. CORREÇÃO: Atraso de 700ms antes do redirecionamento
+    setTimeout(() => {
+        window.location.href = 'quiz.html'; 
+    }, 700);
+  } else {
+    // Caso o feedback não exista na tela (fallback)
+    window.location.href = 'quiz.html';
+  }
 }
 window.selecionarNivel = selecionarNivel;
+
 
 // Carregar perguntas do quiz (padrão + backend)
 async function carregarPerguntasQuiz() {
@@ -504,15 +507,28 @@ async function carregarPerguntas() {
 }
 
 async function excluirPergunta(id) {
+ // **CORREÇÃO:** Elemento de feedback declarado aqui
+  const feedback = document.getElementById('quiz-feedback'); 
   const formData = new FormData();
   formData.append("id", id);
   try {
     const response = await fetch("http://127.0.0.1:5000/excluir-pergunta", { method: "POST", body: formData });
     const result = await response.json();
     if (result.ok) {
-      carregarPerguntas();
+      if (feedback) {
+        feedback.textContent = "Pergunta excluída com sucesso!";
+        feedback.className = "feedback success";
+      }
+      setTimeout(() => {
+        carregarPerguntas();
+      }, 700);
     } else {
-      alert(result.message);
+      if (feedback) { // Usa o elemento feedback correto
+        feedback.textContent = result.message;
+        feedback.className = "feedback error";
+      } else {
+         alert(result.message);
+       }
     }
   } catch (error) {
     console.error("Erro ao excluir pergunta:", error);
@@ -779,7 +795,9 @@ if (btnNovoQuiz) {
 async function carregarDadosPerfil() {
   const email = localStorage.getItem("usuario_email");
   if (!email) {
+    setTimeout(() => {
     window.location.href = "login.html";
+    }, 500);
     return;
   }
   try {

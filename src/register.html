@@ -8,7 +8,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Cadastro - Quiz Católico</title>
 
-  <!-- Fonte moderna para título -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -29,7 +28,8 @@
        CONTEÚDO PRINCIPAL COM FORMULÁRIO DE CADASTRO
        ============================================================ -->
   <main id="main-content" role="main" class="login-screen">
-    <!-- Ajuste: formulário controlado via JavaScript para enviar ao backend Flask -->
+    <h1 class="page-title">Cadastro - Quiz Católico</h1>
+    <!-- formulário controlado via JavaScript para enviar ao backend Flask -->
     <form id="register-form" class="login-form" aria-labelledby="form-title">
       <fieldset>
         <legend id="form-title" class="login-title">Crie uma conta</legend>
@@ -72,7 +72,8 @@
         <!-- Botão de cadastro -->
         <button type="submit" class="login-button" aria-label="Cadastrar nova conta">Cadastrar</button>
       </fieldset>
-    </form>
+  </form>
+</main>
 
     <!-- ============================================================
          MODAL DE SUCESSO
@@ -128,7 +129,7 @@
         feedback.textContent = result.message;
         feedback.className = "feedback success";
 
-        // 👇 Salva o email no localStorage para uso na próxima tela
+        // Salva o email no localStorage para uso na próxima tela
         localStorage.setItem("usuario_email", email);
 
         // Exibe modal de sucesso
